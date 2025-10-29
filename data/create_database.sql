@@ -42,3 +42,4 @@ INSERT INTO data_quality_rules VALUES (
     'SELECT COUNT(*) FROM transactions WHERE user_id IS NULL',
     'CRITICAL'
 );
+INSERT INTO transactions VALUES (999, 999, -500.00, '2025-10-30');
