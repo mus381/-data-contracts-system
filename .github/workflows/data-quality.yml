@@ -1,0 +1,33 @@
+name: Data Quality Checks
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install SQLite
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sqlite3
+      
+      - name: Create database
+        run: |
+          sqlite3 data/transactions.db < data/create_database.sql
+      
+      - name: Run quality checks
+        run: |
+          python3 scripts/check_data_quality.py
